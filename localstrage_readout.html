@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>canvas画像をLocalStorageに保存</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/sample.css">
+</head>
+
+<body>
+    <canvas id="mycanvas" width="800" height="500"></canvas>
+    <script>
+        let img = new Image();
+        window.onload = function () {
+            //   let canvas = document.getElementById("mycanvas");
+            canvas = $('#mycanvas')[0];
+            ctx = canvas.getContext("2d");
+            // let img = new Image();
+            //   debugger
+            img.onload = () => {
+                ctx.drawImage(img, 0, 0);
+                localStorage.setItem('saveKey', canvas.toDataURL());
+            }
+            // let base64 = canvas.toDataURL();
+            // localStorage.setItem('image_test', base64);
+            img.src = 'img/l1.png';
+        };
+    </script>
+</body>
+
+</html>
+
+
+https://qiita.com/shimtaro_sakai/items/c29cf477503bd157632d
+
+Web Storageでは文字列しか保存することがでません。
+そのため画像を保存する場合、
+画像データをバイナリデータからbase64の文字列データに
+変換する必要があります。
+canvas.toDataURL();でcanvasの画像を
+base64へ変換しています。
+window.localStorage[key]で
+base64に変換した画像データをkeyを決めて
+localStorageに保存します。
